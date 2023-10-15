@@ -194,6 +194,9 @@
         Verificar se está rodando o serviço
             systemctl status dnsmasq
 
+        # Colocar na inicialização do sistema
+            /etc/init.d/dnsmasq start
+            
         # Visualizar as queries no dnsmasq
                 dnsmasq -q -d <<enter>>
                     A opção -q exibe as consultas
