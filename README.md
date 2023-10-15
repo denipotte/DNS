@@ -227,5 +227,22 @@
                 listen-address=127.0.0.1#5300
 
 
+    # Outra solução para o problema:
+
+        No Ubuntu 22.04
+
+            Step 1: Edit /etc/dnsmasq.conf
+                sudo nano /etc/dnsmasq.conf
+        
+            Step 2: Change port 53 -> 5353
+                # Listen on this specific port instead of the standard DNS port
+                # (53). Setting this to zero completely disables DNS function,
+                # leaving only DHCP and/or TFTP.
+                port=5353
+                # Set Listen address
+                listen-address=127.0.0.1
+        
+            Step 3: restart dnsmasq.service
+                sudo systemctl restart dnsmasq.service
 
 https://askubuntu.com/questions/191226/dnsmasq-failed-to-create-listening-socket-for-port-53-address-already-in-use
