@@ -144,4 +144,88 @@
                 Consultar o servidor autoritativo pelo "dig"
                     dig NS google.com
                 
-                
+                Consultar por outro servidor | identifação de possível problema - pode ser que um servidor específico ainda não tenha expirado o TTL do registro, guardando ainda o registro antigo 
+                    Consulta pelo seu servidor padrão
+                        dig www.alura.com.br
+
+                    Consultar por um servidor específico
+                        dig @8.8.8.8 www.alura.com.br
+
+                Como verificar o TTL do registro do domínio www.fmrp.usp.br
+                    dig soa fmrp.usp.br
+                    ou
+                    dig -t SOA www.fmrp.usp.br
+
+        # Comando NSLOOKUP
+            O nslookup é um comando de linha de comando que é usado para realizar consultas de DNS em sistemas Windows e em algumas distribuições de sistemas Unix e Linux. Ele fornece informações sobre nomes de domínio, resolução de DNS e servidores DNS, de forma semelhante ao comando dig em sistemas Unix e Linux. O nslookup é uma ferramenta mais antiga, mas ainda amplamente utilizada para fins de diagnóstico de DNS. 
+
+            Sintaxe
+                nslookup -q=NS www.google.com
+                nslookup -q=SOA www.google.com
+
+                Modo interativo
+                    Digita nslookup e aperta "enter"
+
+                    Exibir o servidor default
+                        > server
+                    Configurar com o DNS do google
+                        > server 8.8.8.8
+                    Pesquiser por tipo de registro
+                        set type=ns
+                        set type=A
+                        set type=soa
+                        set type=mx
+
+        # Por padrão um DNS autoritativo não responde a queries de outros domínios
+        # O Google é um servidor público, que aceita consultas
+
+    # Usando o DNS Dinâmico
+        https://www.duckdns.org
+            Serviço gratuito de DNS dinâmico
+                Instalar pacote de atualização de IP. Instruções no site!
+
+    # Configurar servidor DNS
+         Amazon Route 53: Servidor DNS dentro da AWS
+            Utilizar CNAME 
+
+         Instalar um servidor de DNS Recursivo
+            apt install dnsmasq
+
+        Verificar se está rodando o serviço
+            systemctl status dnsmasq
+
+            Se apresentar o erro: 
+                dnsmasq: failed to create listening socket for port 53: Address already in use
+            
+            Check what's listening on port 53 (domain) with:
+                sudo ss -lp "sport = :domain"
+
+                Disable any service that is running on this port. It's usually systemd-resolved.
+
+                Here I make sure that you have stopped the systemd-resolved service. I'm going to also mask it so it doesn't auto start on reboot.
+
+                    sudo systemctl stop systemd-resolved
+                    sudo systemctl disable systemd-resolved
+                    sudo systemctl mask systemd-resolved
+
+                    To undo what you did:
+
+                        sudo systemctl unmask systemd-resolved
+                        sudo systemctl enable systemd-resolved
+                        sudo systemctl start systemd-
+                        
+                Also sudo update-rc.d systemd-resolved disable might also stop it from auto starting on boot but I haven't tested it. Use defaults instead of disable to undo the command.
+
+                Note that systemd-resolved is an important component for name resolution. If you don't have any name resolution service properly running and configured you might encounter Temporary failure in name resolution.
+                Referências:
+
+    # Change what port dnsmasq listens on, by editing the config file:
+
+        sudo nano /etc/dnsmasq.conf
+                Hit Ctrl+W and type listen-address= and hit enter.
+                Uncomment the line and add 127.0.0.1 with a different port than 53 like:
+                listen-address=127.0.0.1#5300
+
+
+
+https://askubuntu.com/questions/191226/dnsmasq-failed-to-create-listening-socket-for-port-53-address-already-in-use
