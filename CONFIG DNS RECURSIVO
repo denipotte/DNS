@@ -1,0 +1,36 @@
+# Instalando e configurando o software para DNS Recursivo: UNBOUND (Só possui o RECURSIVO)
+    apt install unbound
+
+    Obs.: Vem com DNSSEC habilitado por padrão
+    Verificar no caminho /etc/unbound/unbound.conf.d
+    O arquivo é o root-auto-trust-anchor-file.conf
+
+# Configurar o arquivo unbound.conf
+
+    Adicionar as linhas
+
+        server:
+                    interface:127.0.0.1
+                    interface: ::1
+                    interface: 2001:db8:0::1001
+                    access-control: 2001:db8:0::/48 allow
+                    port: 53
+                    hide-identity: yes
+                    hide-version: yes
+                    
+    Salvar as atualizações
+
+    # Verificar se há algum erro de sintaxe
+
+        unbound-checkconf /etc/unbound/unbound.conf
+    
+    # No Debian, reiniciar o servidor e verificar o status
+
+        systemctl restart unbound
+        systemctl status unbound
+    
+    # Testar se o DNS recursivo está funcionando
+
+        dig @localhost nic.br
+
+    

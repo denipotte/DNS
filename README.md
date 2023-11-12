@@ -202,7 +202,7 @@
                     A opção -q exibe as consultas
                     A opção -d não roda em modo daemon, ou seja, fica exibindo as saídas do programa no terminal 
 
-            Se apresentar o erro na inicialização do programa: 
+        # Se apresentar o erro na inicialização do programa: 
                 dnsmasq: failed to create listening socket for port 53: Address already in use
             
             Check what's listening on port 53 (domain) with:
