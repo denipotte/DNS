@@ -33,4 +33,18 @@
 
         dig @localhost nic.br
 
-    
+    # Comando HOST
+        Tráz informações resumidas
+        host nic.br
+        ou se quiser mais detalhes acrescentar a opção -v (verbose)
+        host -v nic.br
+
+        # Consulta reversa IPV6
+            host 2001:12ff:0:4::6
+
+        # Consultar todos os registros atrelados a um certo domínio
+            host -a nic.br | more
+
+
+
+         
