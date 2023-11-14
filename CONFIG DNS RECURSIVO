@@ -45,6 +45,18 @@
         # Consultar todos os registros atrelados a um certo domínio
             host -a nic.br | more
 
+    # Comando DIG
 
+            Consultar IPv6
+                dig AAAA nic.br
+                ou apenas trazer o endereço IPv6, com a opção +short
+                dig AAAA nic.br +short
+
+            Consulta Reversa IPv6
+                dig -x 2001:12ff:0:4::6
+                ou apenas trazer o nome de domínio, com a opção +short
+                dig -x 2001:12ff:0:4::6 +short
+                A saída desse comando é nic.br
+            
 
          
