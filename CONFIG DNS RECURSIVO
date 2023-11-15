@@ -1,3 +1,21 @@
+# Tipos de DNS Recursivo
+
+        # DNS Recursivo Privado
+            - Apenas a sua rede/empresa
+            - Não deve permitir consultas da internet
+            - Caso de uso: Empresas que queiram ter um servidor recursivo próprio.
+
+         # DNS Recursivo Privado Compartilhado
+            - Serviço restrito apenas para a rede/empresa e clientes
+            - Não deve permitir consultas da internet
+            - Caso de uso: Provedores de Internet (Internet Service Provider).
+
+         # DNS Recursivo Público
+            - Serviço disponibilizado para toda a Internet
+            - Caso de uso: Quem não sabe configurar um DNS Recursivo.
+            Ex.: Google (8.8.8.8), CloudFlare (1.1.1.1), OpenDNS, etc.
+            
+
 # Instalando e configurando o software para DNS Recursivo: UNBOUND (Só possui o RECURSIVO)
     apt install unbound
 
@@ -39,6 +57,13 @@
         ou se quiser mais detalhes acrescentar a opção -v (verbose)
         host -v nic.br
 
+        # Trazer os registros dentro de um servidor DNS específico
+            host nic.br d.dns.br
+
+        # Especificar tipo de registro para consulta
+            host -t NS nic.br
+            host -t SOA nic.br b.dns.br
+
         # Consulta reversa IPV6
             host 2001:12ff:0:4::6
 
@@ -58,5 +83,14 @@
                 dig -x 2001:12ff:0:4::6 +short
                 A saída desse comando é nic.br
             
-
+            Verificar quem é o servidor autoritativo
+                dig NS nic.br
          
+            Trazer o endereço QUAD A (AAAA) do nic.br utilizando o NS e.dns.br
+                dig @e.dns.br nic.br AAAA
+
+            Mapear todos os servidores DNS consultados
+                dig nic.br +trace
+
+            
+            
